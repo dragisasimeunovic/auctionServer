@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.ftn.aukcija.model.Korisnik;
 import com.ftn.aukcija.repository.KorisnikRepository;
 
-
 @Service
 public class KorisnikService {
 	
@@ -19,6 +18,16 @@ public class KorisnikService {
 	
 	public Korisnik findById(Long id) {
 		return korisnikRepository.findById(id);
+	}
+	
+	public void deleteUser(Korisnik korisnik) {
+		System.out.println("Korisnik uspjesno obrisan!");
+	}
+	
+	public void activateUser(Korisnik korisnik) {
+		korisnik.setPotvrdjenMail(true);
+		korisnikRepository.save(korisnik);
+		System.out.println("Korisnik uspjesno registrovan!");
 	}
 
 }

@@ -1,0 +1,10 @@
+drop database aukcija;
+
+create schema aukcija;
+
+
+INSERT INTO aukcija.kategorija (id, ime, sifra) VALUES ('1', 'Brale usluge', 'brale');
+
+INSERT INTO aukcija.kategorija (id, ime, sifra) VALUES ('2', 'Zuna', 'prodaja');
+
+INSERT INTO aukcija.kategorija (id, ime, sifra) VALUES ('3', 'Svadbe Torlakovic', 'svadbe');

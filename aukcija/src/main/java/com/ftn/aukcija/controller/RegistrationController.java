@@ -4,6 +4,7 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.Group;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,15 +15,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
+import com.ftn.aukcija.App;
 import com.ftn.aukcija.model.Firma;
 import com.ftn.aukcija.model.Korisnik;
 import com.ftn.aukcija.services.FirmaService;
 import com.ftn.aukcija.services.KorisnikService;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @RestController
 @RequestMapping(value = "/registration")
@@ -57,7 +63,7 @@ public class RegistrationController {
 		Map<String, Object> taskMap = new HashMap<>();
 		taskMap.put("ime", task.getName());
 		taskMap.put("taskID", task.getId());
-		System.out.println(taskMap.get("ime")+ "i id" + taskMap.get("id"));
+		System.out.println(taskMap.get("ime")+ "i id" + taskMap.get("taskID"));
 		return new ResponseEntity<Map<String,Object>>(taskMap, HttpStatus.OK);
 	}
 	
@@ -85,6 +91,7 @@ public class RegistrationController {
 		
 		System.out.println("Hellooo");
 		
+		korisnik.setPotvrdjenMail(false);
 		korisnikService.save(korisnik);
 		Task task = taskService.createTaskQuery().active().taskId(taskId).singleResult();
 		System.out.println("aaaaa " + task.getProcessInstanceId());
@@ -142,7 +149,7 @@ public class RegistrationController {
 		
 		HashMap<String, Object> variables = (HashMap<String, Object>) runtimeService
 				.getVariables(task.getProcessInstanceId());
-		variables.put("user", korisnik);
+		variables.put("korisnik", korisnik);
 		
 		System.out.println(variables);
 
@@ -151,5 +158,13 @@ public class RegistrationController {
 		return new ResponseEntity<>(variables, HttpStatus.OK);
 	}
 	
+	
+	@GetMapping("/confirmRegistration")
+	public RedirectView confirmRegistration(@RequestParam("username") String username, @RequestParam("task") String task) {
+		Execution execution = runtimeService.createExecutionQuery().processInstanceId(task).signalEventSubscriptionName("Aktiviraj korisnika").singleResult();
+		runtimeService.signalEventReceived("Aktiviraj korisnika", execution.getId());
+		return new RedirectView("http://localhost:4200/");
+		
+	}
 
 }

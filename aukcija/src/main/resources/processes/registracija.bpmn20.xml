@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <signal id="aktivirajKorisnika" name="Aktiviraj korisnika" activiti:scope="global"></signal>
+  <signal id="obrisiKorisnika" name="Obrisi korisnika" activiti:scope="global"></signal>
   <process id="registracija" name="registracija" isExecutable="true">
     <startEvent id="startevent1" name="Start"></startEvent>
     <userTask id="usertask1" name="Registracija">
@@ -38,14 +40,19 @@
       </timerEventDefinition>
     </intermediateCatchEvent>
     <sequenceFlow id="flow11" sourceRef="eventgateway1" targetRef="timerintermediatecatchevent1"></sequenceFlow>
-    <serviceTask id="servicetask1" name="Brisanje korisnika" activiti:expression="${registrationService.deleteUser(user)}"></serviceTask>
+    <serviceTask id="servicetask1" name="Brisanje korisnika" activiti:expression="${korisnikService.deleteUser(korisnik)}"></serviceTask>
     <sequenceFlow id="flow15" sourceRef="servicetask1" targetRef="inclusivegateway2"></sequenceFlow>
-    <serviceTask id="servicetask2" name="Uspesna registracija" activiti:expression="${registrationService.register(user)}"></serviceTask>
+    <serviceTask id="servicetask2" name="Uspesna registracija" activiti:expression="${korisnikService.activateUser(korisnik)}"></serviceTask>
     <sequenceFlow id="flow16" sourceRef="servicetask2" targetRef="inclusivegateway2"></sequenceFlow>
-    <serviceTask id="servicetask3" name="mail" activiti:expression="${registrationService.check(user,execution.getProcessInstanceId())}"></serviceTask>
+    <serviceTask id="servicetask3" name="mail" activiti:expression="${mailService.sendConfirmationMail(korisnik,execution.getProcessInstanceId())}"></serviceTask>
     <sequenceFlow id="flow17" sourceRef="servicetask3" targetRef="eventgateway1"></sequenceFlow>
     <sequenceFlow id="flow18" sourceRef="inclusivegateway1" targetRef="servicetask3"></sequenceFlow>
     <sequenceFlow id="flow19" sourceRef="timerintermediatecatchevent1" targetRef="servicetask1"></sequenceFlow>
+    <intermediateCatchEvent id="signalintermediatecatchevent1" name="SignalCatchEvent">
+      <signalEventDefinition signalRef="aktivirajKorisnika"></signalEventDefinition>
+    </intermediateCatchEvent>
+    <sequenceFlow id="flow20" sourceRef="eventgateway1" targetRef="signalintermediatecatchevent1"></sequenceFlow>
+    <sequenceFlow id="flow21" sourceRef="signalintermediatecatchevent1" targetRef="servicetask2"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_registracija">
     <bpmndi:BPMNPlane bpmnElement="registracija" id="BPMNPlane_registracija">
@@ -84,6 +91,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="servicetask3" id="BPMNShape_servicetask3">
         <omgdc:Bounds height="55.0" width="105.0" x="532.0" y="213.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="signalintermediatecatchevent1" id="BPMNShape_signalintermediatecatchevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="680.0" y="380.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="115.0" y="127.0"></omgdi:waypoint>
@@ -139,6 +149,15 @@
       <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
         <omgdi:waypoint x="468.0" y="415.0"></omgdi:waypoint>
         <omgdi:waypoint x="468.0" y="450.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+        <omgdi:waypoint x="587.0" y="359.0"></omgdi:waypoint>
+        <omgdi:waypoint x="587.0" y="397.0"></omgdi:waypoint>
+        <omgdi:waypoint x="680.0" y="397.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
+        <omgdi:waypoint x="697.0" y="415.0"></omgdi:waypoint>
+        <omgdi:waypoint x="682.0" y="450.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
