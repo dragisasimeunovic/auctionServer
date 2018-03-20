@@ -15,8 +15,16 @@ public class KategorijaService {
 	@Autowired
 	private KategorijaRepository kategorijaRepository;
 	
+	public Kategorija save(Kategorija kategorija) {
+		return kategorijaRepository.save(kategorija);
+	}
+	
 	public List<Kategorija> findAll() {
 		return kategorijaRepository.findAll();
+	}
+	
+	public void deleteAll() {
+		kategorijaRepository.deleteAll();
 	}
 	
 }

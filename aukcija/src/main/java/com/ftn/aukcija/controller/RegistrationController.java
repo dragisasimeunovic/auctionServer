@@ -69,25 +69,7 @@ public class RegistrationController {
 	
 	@PostMapping("/{taskId}")
 	public ResponseEntity<Map<String,Object>> registration(@PathVariable String taskId, @RequestBody Korisnik korisnik){
-		
-		
-		if (groupsSetted == false) {
-			Group korisnikG;
-			
-			korisnikG = identityService.newGroup("korisnik");
-			korisnikG.setName("korisnik");
-			korisnikG.setType("assigment");
-			identityService.saveGroup(korisnikG);
-			
-			Group firmaG;
-			
-			firmaG = identityService.newGroup("firma");
-			firmaG.setName("firma");
-			firmaG.setType("assigment");
-			identityService.saveGroup(firmaG);
-			
-			groupsSetted = true;
-		}
+	
 		
 		System.out.println("Hellooo");
 		

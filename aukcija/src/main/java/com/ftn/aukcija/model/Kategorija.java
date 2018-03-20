@@ -27,6 +27,13 @@ public class Kategorija implements Serializable{
 	public Kategorija() {
 
 	}
+	
+
+	public Kategorija(String sifra, String ime) {
+		super();
+		this.sifra = sifra;
+		this.ime = ime;
+	}
 
 
 	public Long getId() {
