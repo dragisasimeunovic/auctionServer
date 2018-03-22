@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gs.collections.impl.list.mutable.ArrayListAdapter;
 
 @Entity
-public class Firma implements Serializable{
+public class Firma implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,6 +20,11 @@ public class KorisnikService {
 		return korisnikRepository.findById(id);
 	}
 	
+	public Korisnik findByKorisnickoImeAndSifra(String korisnickoIme, String sifra) {
+		return korisnikRepository.findByKorisnickoImeAndSifra(korisnickoIme, sifra);
+	}
+	
+	
 	public void deleteUser(Korisnik korisnik) {
 		System.out.println("Korisnik uspjesno obrisan!");
 	}
