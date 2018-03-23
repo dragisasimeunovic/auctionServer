@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ZahtevZaNabavku implements Serializable{
@@ -25,6 +26,9 @@ public class ZahtevZaNabavku implements Serializable{
 	private Integer maxBrojPonuda;
 	
 	private String rokZaNabavku;
+	
+	@ManyToOne
+	private Korisnik korisnik;
 	
 	public ZahtevZaNabavku() {
 
@@ -84,6 +88,14 @@ public class ZahtevZaNabavku implements Serializable{
 
 	public void setRokZaNabavku(String rokZaNabavku) {
 		this.rokZaNabavku = rokZaNabavku;
+	}
+
+	public Korisnik getKorisnik() {
+		return korisnik;
+	}
+
+	public void setKorisnik(Korisnik korisnik) {
+		this.korisnik = korisnik;
 	}
 	
 	
