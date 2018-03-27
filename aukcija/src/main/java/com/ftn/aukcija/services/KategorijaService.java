@@ -27,4 +27,8 @@ public class KategorijaService {
 		kategorijaRepository.deleteAll();
 	}
 	
+	public Kategorija findBySifra(String sifra) {
+		return kategorijaRepository.findBySifra(sifra);
+	}
+	
 }

@@ -1,5 +1,7 @@
 package com.ftn.aukcija.services;
 
+import java.util.ArrayList;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -8,14 +10,20 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import com.ftn.aukcija.model.Firma;
 import com.ftn.aukcija.model.Korisnik;
+import com.ftn.aukcija.model.ZahtevZaNabavku;
 
 @Component
 public class MailService {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private KategorijaService kategorijaService;
 
+	// confirmation mail
 	public void sendConfirmationMail(Korisnik korisnik, String task) {
 		
 		MimeMessage message = mailSender.createMimeMessage();
@@ -53,5 +61,94 @@ public class MailService {
 		return message.toString();
 		
 	}
+	
+	// nema kategorije mail
+	public void noCompaniesFromCategoryMail(ZahtevZaNabavku zahtevZaNabavku, Korisnik korisnik, String task) {
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper messageHelper;
+		try {
+			messageHelper = new MimeMessageHelper(message, true);
+			messageHelper.setFrom("boxboux@gmail.com");
+			messageHelper.setTo("boxboux@gmail.com");
+			messageHelper.setSubject("Odbijen zahtjev - AukcijaApp");
+			messageHelper.setText(noCompaniesFromCategoryText(zahtevZaNabavku, korisnik, task));
+			mailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println("Aktivacioni mejl uspjesno poslat!");
+		
+	}
+	
+	
+	public String noCompaniesFromCategoryText(ZahtevZaNabavku zahtevZaNabavku, Korisnik korisnik, String task) {
+		
+		String imeKategorije = kategorijaService.findBySifra(zahtevZaNabavku.getKategorija()).getIme();
+		
+		StringBuilder message = new StringBuilder();
+		message.append("Postovani " + korisnik.getIme() + ", ");
+		message.append("\n\n");
+		message.append("Vas zahtjev za nabavku trenutno nije moguce izvrsiti. Ne postoji nijedna firma iz kategorije : ");
+		message.append("\n\n");
+		message.append(imeKategorije);
+		message.append("\n\n");
+		message.append("Hvala Vam, ");
+		message.append("\n");
+		message.append("AukcijaApp");
+		
+		return message.toString();
+		
+	}
+	
+	// manje firmi nego ponuda mail
+		public void lackOfFirmsMail(ZahtevZaNabavku zahtjevZaNabavku, Korisnik korisnik, String task, ArrayList<Firma> firme) {
+			
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper;
+			try {
+				messageHelper = new MimeMessageHelper(message, true);
+				messageHelper.setFrom("boxboux@gmail.com");
+				messageHelper.setTo("boxboux@gmail.com");
+				messageHelper.setSubject("Upozorenje - AukcijaApp");
+				messageHelper.setText(lackOfFirmsMailText(zahtjevZaNabavku, korisnik, task, firme));
+				mailSender.send(message);
+			} catch (MessagingException e) {
+				e.printStackTrace();
+			}
+			
+			System.out.println("Aktivacioni mejl uspjesno poslat!");
+			
+		}
+		
+		
+		public String lackOfFirmsMailText(ZahtevZaNabavku zahtevZaNabavku, Korisnik korisnik, String task, ArrayList<Firma> firme) {
+			
+			StringBuilder message = new StringBuilder();
+			message.append("Postovani " + korisnik.getIme() + ", ");
+			message.append("\n\n");
+			message.append("Broj firmi koje ispunjavaju uslove iz zahtjeva je manji od minimalnog broja ponuda koji ste naveli u zahtjevu. Trenutne firme koje ispunjavaju zathjev su: ");
+			message.append("\n\n");
+			for (Firma firma : firme) {
+				message.append("- " + firma.getIme());
+			}
+			message.append("\n\n");
+			message.append("Ukoliko se slazete da posaljete ponude na navedene firme kliknite na link ispod: ");
+			message.append("\n\n");
+			message.append("LINK_DA");
+			message.append("Ukoliko se ne slazete, kliknite na link ispod: ");
+			message.append("\n\n");
+			message.append("LINK_NE");
+			message.append("\n\n");
+			message.append("Hvala Vam, ");
+			message.append("\n");
+			message.append("AukcijaApp");
+			
+			return message.toString();
+			
+		}
+	
+	
 	
 }

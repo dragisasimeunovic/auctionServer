@@ -6,6 +6,6 @@ import com.ftn.aukcija.model.Kategorija;
 
 public interface KategorijaRepository extends JpaRepository<Kategorija, Long> {
 
-	
+	Kategorija findBySifra(String sifra);
 	
 }

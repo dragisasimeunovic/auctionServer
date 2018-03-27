@@ -121,6 +121,7 @@ public class RegistrationController {
 		
 		
 		Korisnik korisnik = korisnikService.findById(Integer.toUnsignedLong(userId));
+		firma.setAgent(korisnik);
 		Firma agentFirma = firmaService.save(firma);
 		korisnik.setFirma(agentFirma);
 		korisnikService.save(korisnik);

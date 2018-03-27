@@ -28,10 +28,20 @@ public class Firma implements Serializable {
 	
 	private String kategorija;
 	
-	private Long userID;
+	@ManyToOne
+	private Korisnik agent;
 	
 	public Firma() {
 
+	}
+	
+	public Firma(Long id, String ime, Integer udaljenost, String kategorija, Korisnik agent) {
+		super();
+		this.id = id;
+		this.ime = ime;
+		this.udaljenost = udaljenost;
+		this.kategorija = kategorija;
+		this.agent = agent;
 	}
 
 	public Long getId() {
@@ -66,12 +76,12 @@ public class Firma implements Serializable {
 		this.kategorija = kategorija;
 	}
 
-	public Long getUserID() {
-		return userID;
+	public Korisnik getAgent() {
+		return agent;
 	}
 
-	public void setUserID(Long userID) {
-		this.userID = userID;
+	public void setAgent(Korisnik agent) {
+		this.agent = agent;
 	}
 	
 }

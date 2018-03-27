@@ -15,18 +15,30 @@ public class Korisnik implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	public String ime;
-	public String prezime;
+	private String ime;
+	
+	private String prezime;
 	
 	@Column(unique = true)
-	public String email;
-	public String sifra;
+	private String email;
+	
+	private String sifra;
+	
 	@Column(unique = true)
-	public String korisnickoIme;
-	public String grad;
-	public String adresa;
-	public String zipCode;
-	public String tip;
+	private String korisnickoIme;
+	
+	private String grad;
+	
+	private String adresa;
+	
+	private Double latitude;
+	
+	private Double longitude;
+	
+	private String postanskiBroj;
+	
+	private String tip;
+	
 	private boolean potvrdjenMail;
 	
 	@ManyToOne
@@ -35,16 +47,11 @@ public class Korisnik implements Serializable{
 	public Korisnik() {
 	}
 
-	public String getTip() {
-		return tip;
-	}
-
-	public void setTip(String tip) {
-		this.tip = tip;
-	}
-
-	public Korisnik(String ime, String prezime, String email, String sifra, String korisnickoIme, String grad,
-			String adresa, String zipCode) {
+	public Korisnik(Long id, String ime, String prezime, String email, String sifra, String korisnickoIme, String grad,
+			String adresa, Double latitude, Double longitude, String postanskiBroj, String tip, boolean potvrdjenMail,
+			Firma firma) {
+		super();
+		this.id = id;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.email = email;
@@ -52,7 +59,20 @@ public class Korisnik implements Serializable{
 		this.korisnickoIme = korisnickoIme;
 		this.grad = grad;
 		this.adresa = adresa;
-		this.zipCode = zipCode;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.postanskiBroj = postanskiBroj;
+		this.tip = tip;
+		this.potvrdjenMail = potvrdjenMail;
+		this.firma = firma;
+	}
+
+	public String getTip() {
+		return tip;
+	}
+
+	public void setTip(String tip) {
+		this.tip = tip;
 	}
 
 	public String getIme() {
@@ -111,14 +131,6 @@ public class Korisnik implements Serializable{
 		this.adresa = adresa;
 	}
 
-	public String getZipCode() {
-		return zipCode;
-	}
-
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -141,6 +153,30 @@ public class Korisnik implements Serializable{
 
 	public void setFirma(Firma firma) {
 		this.firma = firma;
+	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getPostanskiBroj() {
+		return postanskiBroj;
+	}
+
+	public void setPostanskiBroj(String postanskiBroj) {
+		this.postanskiBroj = postanskiBroj;
 	}
 	
 }

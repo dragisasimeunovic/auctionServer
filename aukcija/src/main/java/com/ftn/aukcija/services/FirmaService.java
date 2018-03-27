@@ -1,5 +1,7 @@
 package com.ftn.aukcija.services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,14 @@ public class FirmaService {
 	
 	public Firma save(Firma firma) {
 		return firmaRepository.save(firma);
+	}
+	
+	public Collection<Firma> findByKategorija(String kategorija) {
+		return firmaRepository.findByKategorija(kategorija);
+	}
+	
+	public void deleteAll() {
+		firmaRepository.deleteAll();
 	}
 	
 }

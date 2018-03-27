@@ -14,6 +14,8 @@ public class App {
 
 		applicationContext.getBean(AppService.class).initializeGroups();
 		applicationContext.getBean(AppService.class).initializeCategories();
+		applicationContext.getBean(AppService.class).initializeUsers();
+		applicationContext.getBean(AppService.class).initializeFirms();
 		
 	}
 
