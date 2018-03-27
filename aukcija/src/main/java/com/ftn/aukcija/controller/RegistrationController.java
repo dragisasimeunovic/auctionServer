@@ -70,7 +70,7 @@ public class RegistrationController {
 	@PostMapping("/{taskId}")
 	public ResponseEntity<Map<String,Object>> registration(@PathVariable String taskId, @RequestBody Korisnik korisnik){
 	
-		
+		//TODO: nesto izbacuje za JPA null
 		System.out.println("Hellooo");
 		
 		korisnik.setPotvrdjenMail(false);

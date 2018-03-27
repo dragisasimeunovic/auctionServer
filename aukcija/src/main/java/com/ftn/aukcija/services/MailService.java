@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 
+import com.ftn.aukcija.constants.Constants;
 import com.ftn.aukcija.model.Firma;
 import com.ftn.aukcija.model.Korisnik;
 import com.ftn.aukcija.model.ZahtevZaNabavku;
@@ -136,10 +137,15 @@ public class MailService {
 			message.append("\n\n");
 			message.append("Ukoliko se slazete da posaljete ponude na navedene firme kliknite na link ispod: ");
 			message.append("\n\n");
-			message.append("LINK_DA");
+			message.append("http://localhost:" + AppService.getServerPort() 
+			+ "/nabavka/lackOfFirmsDecision?decision=" + Constants.YES 
+			+ "&task=" + task);
+			message.append("\n\n");
 			message.append("Ukoliko se ne slazete, kliknite na link ispod: ");
 			message.append("\n\n");
-			message.append("LINK_NE");
+			message.append("http://localhost:" + AppService.getServerPort() 
+			+ "/nabavka/lackOfFirmsDecision?decision=" + Constants.NO 
+			+ "&task=" + task);
 			message.append("\n\n");
 			message.append("Hvala Vam, ");
 			message.append("\n");

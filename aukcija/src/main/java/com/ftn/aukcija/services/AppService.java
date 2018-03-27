@@ -134,8 +134,8 @@ public class AppService {
 		
 		firmaService.deleteAll();
 		
-		Firma firma1 = new Firma(1L, "Bosch", 25, "kupoprodaja", korisnikService.findById(2L));
-		Firma firma2 = new Firma(2L, "Mico Kazan", 50, "brale", korisnikService.findById(3L));
+		Firma firma1 = new Firma(1L, "Bosch", 500, "kupoprodaja", korisnikService.findById(2L));
+		Firma firma2 = new Firma(2L, "Mico Kazan", 500, "brale", korisnikService.findById(3L));
 		
 		firmaService.save(firma1);
 		firmaService.save(firma2);
