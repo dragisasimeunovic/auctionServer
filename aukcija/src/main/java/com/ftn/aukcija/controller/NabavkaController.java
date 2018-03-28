@@ -92,6 +92,7 @@ public class NabavkaController {
 		return new ResponseEntity<Map<String,Object>>(dataMap, HttpStatus.OK);
 	}
 	
+	
 	@GetMapping("/lackOfFirmsDecision")
 	public RedirectView lackOfFirmsDecision(@RequestParam("decision") String decision, @RequestParam("task") String task) {
 		

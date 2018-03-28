@@ -119,7 +119,7 @@ public class MailService {
 				e.printStackTrace();
 			}
 			
-			System.out.println("Aktivacioni mejl uspjesno poslat!");
+			System.out.println("Mejl upozorenja uspjesno poslat!");
 			
 		}
 		
@@ -130,9 +130,9 @@ public class MailService {
 			message.append("Postovani " + korisnik.getIme() + ", ");
 			message.append("\n\n");
 			message.append("Broj firmi koje ispunjavaju uslove iz zahtjeva je manji od minimalnog broja ponuda koji ste naveli u zahtjevu. Trenutne firme koje ispunjavaju zathjev su: ");
-			message.append("\n\n");
+			message.append("\n");
 			for (Firma firma : firme) {
-				message.append("- " + firma.getIme());
+				message.append("\n- " + firma.getIme());
 			}
 			message.append("\n\n");
 			message.append("Ukoliko se slazete da posaljete ponude na navedene firme kliknite na link ispod: ");
@@ -146,6 +146,54 @@ public class MailService {
 			message.append("http://localhost:" + AppService.getServerPort() 
 			+ "/nabavka/lackOfFirmsDecision?decision=" + Constants.NO 
 			+ "&task=" + task);
+			message.append("\n\n");
+			message.append("Hvala Vam, ");
+			message.append("\n");
+			message.append("AukcijaApp");
+			
+			return message.toString();
+			
+		}
+		
+		public void sendSupplyRequest(ZahtevZaNabavku zahtjevZaNabavku, String task, ArrayList<Firma> firme){
+			
+			for (Firma firma : firme) {
+			
+				MimeMessage message = mailSender.createMimeMessage();
+				MimeMessageHelper messageHelper;
+				try {
+					messageHelper = new MimeMessageHelper(message, true);
+					messageHelper.setFrom("boxboux@gmail.com");
+					messageHelper.setTo("boxboux@gmail.com");
+					messageHelper.setSubject("Upozorenje - AukcijaApp");
+					messageHelper.setText(sendSupplyRequestMailText(zahtjevZaNabavku, task, firma));
+					mailSender.send(message);
+				} catch (MessagingException e) {
+					e.printStackTrace();
+				}
+				
+				System.out.println("Mejl upozorenja uspjesno poslat firmi: " + firma.getIme());
+				
+			}
+			
+			
+			
+		}
+		
+		public String sendSupplyRequestMailText(ZahtevZaNabavku zahtevZaNabavku, String task, Firma firma) {
+			
+			StringBuilder message = new StringBuilder();
+			message.append("Postovani " + firma.getAgent().getIme() + ", ");
+			message.append("\n\n");
+			message.append("Primili ste zahtjev za nabavku od korisnika " + zahtevZaNabavku.getKorisnik().getKorisnickoIme());
+			message.append("\n\n");
+			message.append("Ukoliko zelite da posaljete ponudu kliknite na link ispod, a zatim popunite ponudu: ");
+			message.append("\n\n");
+			message.append("LINK_DA");
+			message.append("\n\n");
+			message.append("Ukoliko ne zelite da posaljete ponudu kliknite na link ispod: ");
+			message.append("\n\n");
+			message.append("LINK_NE");
 			message.append("\n\n");
 			message.append("Hvala Vam, ");
 			message.append("\n");

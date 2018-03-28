@@ -123,7 +123,7 @@ public class RegistrationController {
 		Korisnik korisnik = korisnikService.findById(Integer.toUnsignedLong(userId));
 		firma.setAgent(korisnik);
 		Firma agentFirma = firmaService.save(firma);
-		korisnik.setFirma(agentFirma);
+		//korisnik.setFirma(agentFirma);
 		korisnikService.save(korisnik);
 		
 		Task task = taskService.createTaskQuery().active().taskId(taskId).singleResult();
