@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.ftn.aukcija.constants.Constants;
 import com.ftn.aukcija.model.Firma;
 import com.ftn.aukcija.model.Korisnik;
+import com.ftn.aukcija.model.Ponuda;
 import com.ftn.aukcija.model.ZahtevZaNabavku;
 
 @Component
@@ -23,6 +24,9 @@ public class MailService {
 	
 	@Autowired
 	private KategorijaService kategorijaService;
+	
+	@Autowired
+	private PonudaService ponudaService;
 
 	// confirmation mail
 	public void sendConfirmationMail(Korisnik korisnik, String task) {
@@ -169,6 +173,9 @@ public class MailService {
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
+			
+			Ponuda ponuda = new Ponuda(null, zahtjevZaNabavku, firma, Constants.PONUDA_CEKANJE, 0.0, "");
+			ponudaService.save(ponuda);
 			
 			System.out.println("Mejl upozorenja uspjesno poslat firmi: " + firma.getIme());
 				
