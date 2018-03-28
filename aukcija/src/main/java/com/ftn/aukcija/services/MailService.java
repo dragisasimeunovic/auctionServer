@@ -155,29 +155,23 @@ public class MailService {
 			
 		}
 		
-		public void sendSupplyRequest(ZahtevZaNabavku zahtjevZaNabavku, String task, ArrayList<Firma> firme){
+		public void sendSupplyRequest(ZahtevZaNabavku zahtjevZaNabavku, String task, Firma firma){
 			
-			for (Firma firma : firme) {
-			
-				MimeMessage message = mailSender.createMimeMessage();
-				MimeMessageHelper messageHelper;
-				try {
-					messageHelper = new MimeMessageHelper(message, true);
-					messageHelper.setFrom("boxboux@gmail.com");
-					messageHelper.setTo("boxboux@gmail.com");
-					messageHelper.setSubject("Upozorenje - AukcijaApp");
-					messageHelper.setText(sendSupplyRequestMailText(zahtjevZaNabavku, task, firma));
-					mailSender.send(message);
-				} catch (MessagingException e) {
-					e.printStackTrace();
-				}
-				
-				System.out.println("Mejl upozorenja uspjesno poslat firmi: " + firma.getIme());
-				
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper messageHelper;
+			try {
+				messageHelper = new MimeMessageHelper(message, true);
+				messageHelper.setFrom("boxboux@gmail.com");
+				messageHelper.setTo("boxboux@gmail.com");
+				messageHelper.setSubject("Upozorenje - AukcijaApp");
+				messageHelper.setText(sendSupplyRequestMailText(zahtjevZaNabavku, task, firma));
+				mailSender.send(message);
+			} catch (MessagingException e) {
+				e.printStackTrace();
 			}
 			
-			
-			
+			System.out.println("Mejl upozorenja uspjesno poslat firmi: " + firma.getIme());
+				
 		}
 		
 		public String sendSupplyRequestMailText(ZahtevZaNabavku zahtevZaNabavku, String task, Firma firma) {

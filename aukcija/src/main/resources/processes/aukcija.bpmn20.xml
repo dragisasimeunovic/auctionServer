@@ -33,7 +33,7 @@
       <multiInstanceLoopCharacteristics isSequential="false" activiti:collection="firme" activiti:elementVariable="firma"></multiInstanceLoopCharacteristics>
       <startEvent id="startevent2" name="Start"></startEvent>
       <endEvent id="endevent2" name="End"></endEvent>
-      <serviceTask id="servicetask4" name="Posalji firmama mejlove" activiti:expression="${mailService.sendSupplyRequest(zahtjev, execution.getProcessInstanceId(), firme)}"></serviceTask>
+      <serviceTask id="servicetask4" name="Posalji firmama mejlove" activiti:expression="${mailService.sendSupplyRequest(zahtjev, execution.getProcessInstanceId(), firma)}"></serviceTask>
       <sequenceFlow id="flow17" sourceRef="startevent2" targetRef="servicetask4"></sequenceFlow>
       <sequenceFlow id="flow18" sourceRef="servicetask4" targetRef="endevent2"></sequenceFlow>
     </subProcess>

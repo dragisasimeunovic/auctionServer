@@ -55,10 +55,12 @@ public class NabavkaController {
 								.get(taskService.createTaskQuery()
 								.active().list().size()-1);
 		
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMdd");
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat format2 = new SimpleDateFormat("yyyyMMdd");
 		Date date = format1.parse(zahtevZaNabavku.getRokZaPonude());
-		System.out.println(format2.format(date));
+		zahtevZaNabavku.setRokZaPonude(format2.format(date));
+		date = format1.parse(zahtevZaNabavku.getRokZaNabavku());
+		zahtevZaNabavku.setRokZaNabavku(format2.format(date));
 		
 		ArrayList<Firma> firme = (ArrayList<Firma>) nabavkaService.getFirmsForAuction(zahtevZaNabavku, korisnikID);
 		
