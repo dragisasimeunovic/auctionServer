@@ -159,6 +159,7 @@ public class MailService {
 			
 		}
 		
+		//slanje zahtjeva ka firmama
 		public void sendSupplyRequest(ZahtevZaNabavku zahtjevZaNabavku, String task, Firma firma){
 			
 			MimeMessage message = mailSender.createMimeMessage();
@@ -203,7 +204,6 @@ public class MailService {
 			return message.toString();
 			
 		}
-	
-	
+
 	
 }

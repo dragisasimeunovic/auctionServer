@@ -26,4 +26,8 @@ public class FirmaService {
 		firmaRepository.deleteAll();
 	}
 	
+	public Collection<Firma> findByKategorijaAndIdNotIn(String kategorija, Collection<Long> ids) {
+		return firmaRepository.findByKategorijaAndIdNotIn(kategorija, ids);
+	}
+	
 }

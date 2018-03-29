@@ -10,4 +10,6 @@ public interface FirmaRepository extends JpaRepository<Firma, Long>{
 
 	Collection<Firma> findByKategorija(String kategorija);
 	
+	Collection<Firma> findByKategorijaAndIdNotIn(String kategorija, Collection<Long> ids);
+	
 }

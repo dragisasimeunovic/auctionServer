@@ -45,4 +45,5 @@ public class PonudaController {
 		return new ResponseEntity<Ponuda>(savedOffer, HttpStatus.OK);
 	}
 	
+	
 }
