@@ -37,6 +37,10 @@ public class PonudaService {
 		return (List<Ponuda>) ponudaRepository.findByZahtevZaNabavkuAndStatus(zahtevZaNabavku, Constants.PONUDA_POSLATA);
 	}
 	
+	public List<Ponuda> getAllRankedSentOffersForRequest(ZahtevZaNabavku zahtevZaNabavku) {
+		return (List<Ponuda>) ponudaRepository.findByZahtevZaNabavkuAndStatusOrderByPoeniDesc(zahtevZaNabavku, Constants.PONUDA_POSLATA);
+	}
+	
 	public List<Ponuda> getAllWaitingOffersForRequest(ZahtevZaNabavku zahtevZaNabavku) {
 		return (List<Ponuda>) ponudaRepository.findByZahtevZaNabavkuAndStatus(zahtevZaNabavku, Constants.PONUDA_CEKANJE);
 	}

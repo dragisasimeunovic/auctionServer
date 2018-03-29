@@ -19,7 +19,7 @@ public class ZahtevZaNabavku implements Serializable{
 	
 	private String opis;
 	
-	private Integer maxVrijednost;
+	private Double maxVrijednost;
 	
 	private String rokZaPonude;
 	
@@ -58,11 +58,11 @@ public class ZahtevZaNabavku implements Serializable{
 		this.opis = opis;
 	}
 
-	public Integer getMaxVrijednost() {
+	public Double getMaxVrijednost() {
 		return maxVrijednost;
 	}
 
-	public void setMaxVrijednost(Integer maxVrijednost) {
+	public void setMaxVrijednost(Double maxVrijednost) {
 		this.maxVrijednost = maxVrijednost;
 	}
 

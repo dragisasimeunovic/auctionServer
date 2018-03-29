@@ -27,13 +27,15 @@ public class Ponuda implements Serializable {
 	
 	private String rokZaIzvrsavanje;
 	
+	private Double poeni;
+	
 	
 	public Ponuda() {
 
 	}
 
 	public Ponuda(Long id, ZahtevZaNabavku zahtevZaNabavku, Firma firma, String status, Double cijena,
-			String rokZaIzvrsavanje) {
+			String rokZaIzvrsavanje, Double poeni) {
 		super();
 		this.id = id;
 		this.zahtevZaNabavku = zahtevZaNabavku;
@@ -41,6 +43,7 @@ public class Ponuda implements Serializable {
 		this.status = status;
 		this.cijena = cijena;
 		this.rokZaIzvrsavanje = rokZaIzvrsavanje;
+		this.poeni = poeni;
 	}
 
 	public Long getId() {
@@ -89,6 +92,14 @@ public class Ponuda implements Serializable {
 
 	public void setRokZaIzvrsavanje(String rokZaIzvrsavanje) {
 		this.rokZaIzvrsavanje = rokZaIzvrsavanje;
+	}
+	
+	public Double getPoeni() {
+		return poeni;
+	}
+	
+	public void setPoeni(Double poeni) {
+		this.poeni = poeni;
 	}
 	
 }

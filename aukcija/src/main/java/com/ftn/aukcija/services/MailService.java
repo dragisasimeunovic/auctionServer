@@ -175,7 +175,7 @@ public class MailService {
 				e.printStackTrace();
 			}
 			
-			Ponuda ponuda = new Ponuda(null, zahtjevZaNabavku, firma, Constants.PONUDA_CEKANJE, 0.0, "");
+			Ponuda ponuda = new Ponuda(null, zahtjevZaNabavku, firma, Constants.PONUDA_CEKANJE, 0.0, "", 0.0);
 			ponudaService.save(ponuda);
 			
 			System.out.println("Mejl upozorenja uspjesno poslat firmi: " + firma.getIme());

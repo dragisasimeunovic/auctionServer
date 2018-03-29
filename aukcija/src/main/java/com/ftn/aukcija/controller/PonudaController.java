@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.aukcija.model.Kategorija;
 import com.ftn.aukcija.model.Ponuda;
 import com.ftn.aukcija.model.ZahtevZaNabavku;
+import com.ftn.aukcija.services.PointsService;
 import com.ftn.aukcija.services.PonudaService;
 
 @RestController
@@ -28,6 +29,9 @@ public class PonudaController {
 	
 	@Autowired
 	private PonudaService ponudaService;
+	
+	@Autowired
+	private PointsService pointsService;
 
 	@GetMapping("/getAllActiveOffers/{korisnikID}")
 	public ResponseEntity<List<Ponuda>> getAllActiveOffers(@PathVariable Long korisnikID){
@@ -41,8 +45,15 @@ public class PonudaController {
 		SimpleDateFormat format2 = new SimpleDateFormat("yyyyMMdd");
 		Date date = format1.parse(ponuda.getRokZaIzvrsavanje());
 		ponuda.setRokZaIzvrsavanje(format2.format(date));
+		Double points = pointsService.points(ponuda.getRokZaIzvrsavanje(), ponuda.getZahtevZaNabavku().getRokZaNabavku(), ponuda.getCijena(), ponuda.getZahtevZaNabavku().getMaxVrijednost());
 		Ponuda savedOffer = ponudaService.save(ponuda);
 		return new ResponseEntity<Ponuda>(savedOffer, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getAllSentOffersRanked")
+	public ResponseEntity<List<Ponuda>> getAllSentOffersRanked(@RequestBody ZahtevZaNabavku zahtevZaNabavku){
+		List<Ponuda> ponude = ponudaService.getAllRankedSentOffersForRequest(zahtevZaNabavku);
+		return new ResponseEntity<List<Ponuda>>(ponude, HttpStatus.OK);
 	}
 	
 	

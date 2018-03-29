@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class PointsService {
 
 	public long dayDifferenceBetweenDates(String datumPonude, String datumZahtjeva) throws ParseException {
